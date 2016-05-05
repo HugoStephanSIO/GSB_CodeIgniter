@@ -1,6 +1,17 @@
 <?php
+/**
+ * Fichier application/controllers/Connect.php
+ * 
+ * Contient la classe Connect
+ */
+
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+/**
+ * Classe Connect : contrôleur gérant la connexion des visiteus et des comptables en aiguillant sur le bon sous controleur
+ */
 class Connect extends CI_Controller 
 {
     // CONSTRUCTEUR :
@@ -16,8 +27,10 @@ class Connect extends CI_Controller
         $this->load->helper('url');
     }
     
-    // INDEX :
-    // -------
+    
+    /**
+     * Affiche le formulaire de connexion
+     */
     public function index()
     {
         // Si le chargement s'est mal passé, renvoie un message d'erreur
@@ -37,8 +50,10 @@ class Connect extends CI_Controller
         $this->load->view('v_pied');
     }
         
-    // CONNEXION :
-    // -----------
+    
+    /**
+     * Validation des identifiants visiteur ou comptable selon l'option choisie
+     */
     public function connecter ()
     {
         // Lorsqu'on clique sur valider sur le formulaire
@@ -57,6 +72,14 @@ class Connect extends CI_Controller
             }
         } 
     }
+    
+    
+    /**
+     * Connexion d'un visiteur, appel du controleur Visiteur
+     * 
+     * @param type $login
+     * @param type $mdp
+     */
     public function connecterVisiteur ($login, $mdp)
     {
         $id = $this->Model->verifierVisiteur($login, $mdp);
@@ -65,7 +88,6 @@ class Connect extends CI_Controller
             // On enregistre en session flash l'id du membre 
             $this->session->set_flashdata("id",$this->Model->verifierVisiteur($login, $mdp));
             // On charge la page d'accueil visiteur
-            
             redirect(site_url("Visiteur/chargerVisiteur/"));
         }
         else
@@ -75,14 +97,23 @@ class Connect extends CI_Controller
             redirect('Connect', 'refresh');
         }
     }
+    
+    
+    /**
+     * Connexion d'un comptable, appel du controleur Comptable
+     * 
+     * @param type $login
+     * @param type $mdp
+     */
     public function connecterComptable ($login, $mdp)
     {
         $id = $this->Model->verifierComptable($login, $mdp);
         if($id!=false)
         {
+            // On enregistre en session flash l'id du membre 
             $this->session->set_flashdata("id", $this->Model->verifierComptable($login, $mdp));
+            // On charge la page d'accueil comptable
             redirect(site_url("Comptable/chargerComptable/"));
-            //$this->chargerComptable($this->Model->verifierComptable($login, $mdp));
         }
         else
         {
@@ -90,23 +121,6 @@ class Connect extends CI_Controller
             redirect("Connect", 'refresh');
         }
     }
-    
-    
-
-    public function chargerComptable ($id)
-    {
-        $this->session->set_flashdata("id", $id);
-        if ($this->input->post('login')!="")
-        {
-            $success = "Connexion réussi ! Bonjour ".$this->input->post('login')." !";
-            $data['success'] = $success;
-        }
-        $data['id'] = $id;
-        $data['infos'] = $this->Model->getInformationsComptable($id);
-        $this->load->view('v_entete', $data);
-        $this->load->view('v_sommaire_c');
-        $this->load->view('v_pied');
-    }  
 }
 
 ?>
