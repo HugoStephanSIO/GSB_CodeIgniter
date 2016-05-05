@@ -9,23 +9,24 @@
                             <label for="lstMois" accesskey="n">Mois : </label>
 				<select id="lstMois" name="lstMois" class="textbox">
                                     <?php
+                                        // Affiche tous les mois pour lesquels il existe une fiche de frais à consulter
 					foreach ($lesMois as $unMois)
 					{
                                             $mois = $unMois['mois'];
                                             $numAnnee =  $unMois['numAnnee'];
                                             $numMois =  $unMois['numMois'];
                                                 if($mois == $moisASelectionner)
-                                                    {
+                                                {
                                     ?>
-                                                        <option selected value="<?php echo $mois ?>"><?php echo  $numMois."/".$numAnnee ?> </option>
+                                                    <option selected value="<?php echo $mois ?>"><?php echo  $numMois."/".$numAnnee ?> </option>
                                             <?php 
-                                                    }
+                                                }
                                                 else
-                                                    { 
+                                                { 
                                             ?>
-                                                        <option value="<?php echo $mois ?>"><?php echo  $numMois."/".$numAnnee ?> </option>
+                                                    <option value="<?php echo $mois ?>"><?php echo  $numMois."/".$numAnnee ?> </option>
                                             <?php 
-                                                    }
+                                                }
                                         }
                                             ?>     
                                 </select>

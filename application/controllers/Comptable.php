@@ -1,6 +1,17 @@
 <?php
+/**
+ * Fichier application/controllers/Comptable.php
+ * 
+ * Contient la classe Comptable
+ */
+
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+/**
+ * Classe Comptable : contrôleur gérant les actions et les vues des comptables en utilisant le modèle
+ */
 class Comptable extends CI_Controller 
 {
     // CONSTRUCTEUR :
@@ -11,45 +22,54 @@ class Comptable extends CI_Controller
 
         $this->load->library('session'); // le gestionnaire de session
         $this->load->model('Model'); // charge le modèle
-        $this->load->helper('security');
         $this->load->helper('outils');
-        $this->load->library('form_validation'); // le système de validation de formulaire
         $this->load->helper('url'); 
-        
     }
     
-    // Connexion d'un comptable
+    
+    
+    
+    // FONCTIONS APPELANT DES VUES :
+    // -----------------------------
+    /**
+     *  Connexion d'un comptable
+     */
     public function chargerComptable ()
     {
+        // Remet l'id en session et en variable transmis aux vues
         $id = $this->session->flashdata("id");
         $this->session->set_flashdata("id", $id);
         $data['id'] = $id;
         $data['infos'] = $this->Model->getInformationsComptable($id);
-        $this->load->view('v_entete', $data);
-        $this->load->view('v_sommaire_c', $data);
-        $this->load->view("v_accueil", $data);
-        $this->load->view('v_pied');
+        modLoad($this, $data, "v_accueil");
     }  
-    
-    // Charge la liste des visiteurs
+    /**
+     * Charge la liste des visiteurs
+     * 
+     * @param type $idComptable 
+     */
     public function chargerListeVisiteur($idComptable)
     {
+        // Remet l'id en session et en variable transmis aux vues
         $id = $idComptable;
         $this->session->set_flashdata("id", $id);
         $data['idComptable'] = $id;
         $data['infos'] = $this->Model->getInformationsComptable($id);
         
-        // Charge le modèle: getLesVisiteurs
+        // Récupére les visisteurs dans la bdd
         $unVisiteur = $this->Model->getLesVisiteurs();
         $data['visiteur'] = $unVisiteur;
         $data['titre'] = 'Liste des visiteurs';
+        
         // Chargement des vues
-        $this->load->view('v_entete', $data);
-        $this->load->view('v_sommaire_c', $data);
-        $this->load->view('v_listevisiteurs', $data);
-        $this->load->view('v_pied');
+        modLoad($this, $data, 'v_listevisiteurs');
     }
-    
+    /**
+     * Récupére les fiches de frais non validées d'un visiteur
+     * 
+     * @param type $idVisiteur
+     * @param type $idComptable 
+     */
     public function ficheNoVa($idVisiteur, $idComptable)
     {           
         $data['idVisiteur'] = $idVisiteur;
@@ -65,73 +85,121 @@ class Comptable extends CI_Controller
         // Titre de la page concerné
         $data['titre'] = "Informations des fiches frais non validées";
         // Chargement des vues
-        $this->load->view('v_entete', $data);
-        $this->load->view("v_sommaire_c", $data);
-        $this->load->view('v_fichesNoVa', $data);
-        $this->load->view("v_pied");
+        modLoad($this,$data,'v_fichesNoVa');
     }
-    
-    // Charge les fiches en état CR
+    /**
+     * Charge les fiches dans un certain état
+     * 
+     * @param type $etat l'état des fiches que l'ont veut afficher
+     * @param type $idComptable 
+     */
     public function chargerFichesEnEtat($etat, $idComptable)
     {
+        // Remet l'id en variable de session
         $this->session->set_flashdata("id", $idComptable);
+        
+        // Transmet à la vue l'état des fiches que l'on affiche
         $data["action"] = $etat;
+        // Et les fiches récupérées par le model
+        $data["lesFiches"] = $this->Model->getLesFichesEnEtat($etat) ;
         $data["idComptable"] = $idComptable ;
         $data["infos"] = $this->Model->getInformationsComptable($idComptable);
-        $data["lesFiches"] = $this->Model->getLesFichesEnEtat($etat) ;
         
-        $data["titre"] = "Les fiches crées";
+        $data["titre"] = "Liste des fiches en état ". $etat;
         
-        $this->load->view("v_entete", $data);
-        $this->load->view("v_sommaire_c", $data);
-        $this->load->view("v_liste_fiches", $data);
-        $this->load->view("v_pied");
+        modLoad($this, $data, "v_liste_fiches");
     }
-    
-    public function supprimerFiche($idVisiteur, $clef, $idComptable, $action)
-    {
-        $this->Model->supprimerFiche($idVisiteur, $clef);
-        $this->chargerFichesEnEtat($action, $idComptable);
-    }
-    public function cloturerFiche($idVisiteur, $clef, $idComptable)
-    {
-        $this->Model->majEtatFicheFrais($idVisiteur, $clef, "CL");
-        $this->chargerFichesEnEtat("CR", $idComptable);
-    }
-    public function validerFiche($idVisiteur, $clef, $idComptable)
-    {
-        $this->Model->majEtatFicheFrais($idVisiteur, $clef, "VA");
-        $this->Model->majTotalRembourse($idVisiteur, $clef);
-        $this->chargerFichesEnEtat("CL", $idComptable);
-    }
-    public function rembourserFiche($idVisiteur, $clef, $idComptable)
-    {
-        $this->Model->majEtatFicheFrais($idVisiteur, $clef, "RB");
-        $this->chargerFichesEnEtat("VA", $idComptable);
-    }
+    /**
+     * Affiche les détails d'une fiche dans une vue
+     * 
+     * @param type $idVisiteur
+     * @param type $clef
+     * @param type $idComptable
+     * @param type $action
+     */
     public function consulterFiche($idVisiteur, $clef, $idComptable, $action)
     {
         $leMois = $clef; 
         
         $data["action"] = $action;
         $data["idVisiteur"] = $idVisiteur;
-        $data["infos"] = $this->Model->getInformationsComptable($idComptable);
+        $data["moisASelectionner"] = $leMois;
+        
+        // Données récupérées à partir du model, à transmettre aux vues
+        $data["infos"] = $this->Model->getInformationsComptable($idComptable);  
         $data["lesMois"] = $this->Model->getLesMoisDisponibles($idVisiteur);
-	$data["moisASelectionner"] = $leMois;
         $data["lesFraisHorsForfait"] = $this->Model->getLesFraisHorsForfait($idVisiteur,$leMois);
         $data["lesFraisForfait"] = $this->Model->getLesFraisForfait($idVisiteur,$leMois);
         $data["lesInfosFicheFrais"] = $this->Model->getLesInfosFicheFrais($idVisiteur,$leMois);
+        
+        // Découpage de la clef AAAAMM
         $data["numAnnee"] = substr($leMois,0,4);
         $data["numMois"] = substr($leMois,4,2);
+        
+        // Découpage de la ligne d'informations sur la fiche
         $data["libEtat"] = $data["lesInfosFicheFrais"]['libEtat'];
         $data["montantValide"] = $data["lesInfosFicheFrais"]['montantValide'];
         $data["nbJustificatifs"] = $data["lesInfosFicheFrais"]['nbJustificatifs'];
         $dateModif =  $data["lesInfosFicheFrais"]['dateModif'];
         $data["dateModif"] =  dateAnglaisVersFrancais($dateModif);
                 
-        $this->load->view('v_entete', $data);
-        $this->load->view('v_sommaire_c', $data);
-        $this->load->view('v_etatFrais', $data);
-        $this->load->view('v_pied');
+        // Chargement des vues
+        modLoad($this, $data, 'v_etatFrais');
+    }
+    
+    
+    
+    
+    // FONCTIONS GESTION DES FICHES :
+    // ------------------------------
+    /**
+     * Supprime une fiche précise
+     * 
+     * @param type $idVisiteur le visiteur de la fiche à supprimer
+     * @param type $clef la date de la fiche à supprimer
+     * @param type $idComptable 
+     * @param type $action l'état de la fiche pour savoir à quel liste de fiche retourner
+     */
+    public function supprimerFiche($idVisiteur, $clef, $idComptable, $action)
+    {
+        $this->Model->supprimerFiche($idVisiteur, $clef);
+        $this->chargerFichesEnEtat($action, $idComptable);
+    } 
+    /**
+     * Cloture une fiche précise
+     * 
+     * @param type $idVisiteur le visiteur de la fiche à clôturer
+     * @param type $clef la date de la fiche à cloturer
+     * @param type $idComptable
+     */
+    public function cloturerFiche($idVisiteur, $clef, $idComptable)
+    {
+        $this->Model->majEtatFicheFrais($idVisiteur, $clef, "CL");
+        $this->chargerFichesEnEtat("CR", $idComptable);
+    }
+    /**
+     * Valide une fiche précise
+     * 
+     * @param type $idVisiteur le visiteur de la fiche à valider
+     * @param type $clef la date de la fiche à valider
+     * @param type $idComptable
+     */
+    public function validerFiche($idVisiteur, $clef, $idComptable)
+    {
+        $this->Model->majEtatFicheFrais($idVisiteur, $clef, "VA");
+        $this->Model->majTotalRembourse($idVisiteur, $clef);
+        $this->chargerFichesEnEtat("CL", $idComptable);
+    }
+    /**
+     * Rembourse une fiche précise
+     * 
+     * @param type $idVisiteur le visiteur de la fiche à rembourser
+     * @param type $clef la date de la fiche à rembourser
+     * @param type $idComptable
+     */
+    public function rembourserFiche($idVisiteur, $clef, $idComptable)
+    {
+        $this->Model->majEtatFicheFrais($idVisiteur, $clef, "RB");
+        $this->chargerFichesEnEtat("VA", $idComptable);
     }
 }

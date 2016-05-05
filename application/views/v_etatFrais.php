@@ -11,6 +11,7 @@
                     <legend class="soustitrepage">Eléments forfaitisés </legend>
                         <tr class="panel-heading" style="background:#4f6185; color: #ffffff;">
                             <?php
+                                // Un type de frais forfait = une cellule titre
                                 foreach ( $lesFraisForfait as $unFraisForfait ) 
                                 {
                                     $libelle = $unFraisForfait['libelle'];
@@ -22,6 +23,7 @@
                         </tr>
                         <tr>
                             <?php
+                                // Un type frais hors forfait = une cellule quantité
                                 foreach (  $lesFraisForfait as $unFraisForfait  ) 
                                 {
                                     $quantite = $unFraisForfait['quantite'];
@@ -43,6 +45,7 @@
                             <th class="panel-heading" style="background:#4f6185; color: #ffffff;">Montant</th>                
                         </tr>
                             <?php      
+                                    // Un frais hors forfait = une ligne
                                     foreach ( $lesFraisHorsForfait as $unFraisHorsForfait ) 
                                     {
                                         $date = $unFraisHorsForfait['date'];
@@ -61,6 +64,7 @@
             </table>
 
             <?php
+                // On affiche des boutons proposants des actions différentes selon le type d'état de la liste dont vient l'utilisateur
                 if (isset($action))
                 {
                     switch($action)
@@ -78,6 +82,7 @@
                             echo "&nbsp;&nbsp;&nbsp;<a class='btn btn-primary' href='".site_url("Comptable/chargerFichesEnEtat/VA/".$infos->id)."'>Retour</a>";
                             break ;
                         case "RB":
+                            echo "<a class='btn btn-primary' href='".site_url("Comptable/chargerFichesEnEtat/RB/".$infos->id)."'>Retour</a>";
                             break ;
                     }
                 }

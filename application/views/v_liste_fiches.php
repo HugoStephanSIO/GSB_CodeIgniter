@@ -2,6 +2,7 @@
     <legend class="h2titre">
         <center>Liste des fiches
             <?php
+                // Le titre du tableau change selon le type de fiches que l'on affiche
                 switch($action)
                 {
                     case "CR":
@@ -35,6 +36,7 @@
         <?php
             foreach($lesFiches as $uneFiche)
             {
+                // Variables pour simplification
                 $clef = $uneFiche["mois"];
                 $annee = substr($clef,0,4);
                 $mois = moisChiffresVersLettres(substr($clef, 4, 2));
@@ -43,6 +45,8 @@
                 $date = $uneFiche["dateModif"];
                 $prenom = $uneFiche["prenom"];
                 $nom = $uneFiche["nom"];
+                
+                // Affiche d'une fiche
                 echo "<tr>" ;
                 echo    "<td>".$clef."</td>";
                 echo    "<td>".$mois."</td>";
@@ -51,7 +55,7 @@
                 echo    "<td>".$nb."</td>";
                 echo    "<td>".$montant."</td>";
                 echo    "<td>".$date."</td>";
-                echo    "<td>".
+                echo    "<td>". // L'action possible sur la fiche dépend du type de fiches que l'on affiche (ex : si on affiche les fiches créées on doit pouvoir les cloturer)
                         "<a href='".site_url("Comptable/consulterFiche/".$uneFiche["idVisiteur"]."/".$clef."/".$idComptable."/".$action)."'>Consulter</a>&nbsp;&nbsp;|&nbsp;&nbsp;" ;
                             switch($action)
                             {

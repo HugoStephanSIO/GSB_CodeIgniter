@@ -1,4 +1,4 @@
-<!-- Page d'accueil selon l'utilisateur qui se connecte (comptable ou visiteur) -->
+<!-- Page d'accueil  -->
 <div class="col-md-8"> 
     <h3>
         Bonjour <?php echo $infos->prenom . " " . $infos->nom ; ?><br/><br/>

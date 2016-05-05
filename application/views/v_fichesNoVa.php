@@ -4,6 +4,7 @@
     <center><h2 class="h2titre">Liste des fiches de frais à valider :</h2></center>
     <h4>
         <?php
+            // Le haut du menu affiche les infos du visiteur
             echo "<b>Visiteur numéro</b> : ".$visiteur->id."<br/>";
             echo "<b>Nom</b> : ".$visiteur->nom.""
                     . "<br/> "

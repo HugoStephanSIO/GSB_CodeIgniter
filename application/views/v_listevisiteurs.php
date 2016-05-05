@@ -13,6 +13,7 @@
                     <th>Détails des fiches frais</th>
                 </thead>
                     <?php
+                        // Un visiteur = une ligne du tableau
                         foreach ($visiteur as $ligne)
                         {
                     ?>
