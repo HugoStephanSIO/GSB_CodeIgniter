@@ -1,0 +1,177 @@
+body {
+ font-family:"calibri",sans-serif;
+ background:#eff2f7;
+ }
+ 
+ /* PAGE D'ACCUEIL - CONNEXION */
+ 
+ h3 {
+ text-align : center ;
+ color:#314d63;
+ font-family: cambria;
+}
+
+h4 {
+text-align : center ;
+color:#314d63;
+font-family: cambria;
+font-size: 18px;
+}
+
+.h2titre {
+text-decoration : underline;
+ color:#314d63;
+ font-family: cambria;
+ font-size: 23px;
+}
+
+.soustitrepage {
+
+ color:#314d63;
+ font-family: calibri light;
+ font-size: 20px;
+}
+
+.infos {
+	     font-size: 16px;
+     font-family: Calibri light;
+}
+
+table.listeLegere th, table.listeLegere td {
+  border : dotted rgb(85,101,81) 0.1em;
+  padding:0.5em;
+  vertical-align : top;
+  text-align : left;
+}
+
+  .textbox { 
+    border: 1px solid #c4c4c4; 
+    height: 25px; 
+    width: 275px; 
+    font-size: 13px; 
+    padding: 4px 4px 4px 4px; 
+    border-radius: 4px; 
+    -moz-border-radius: 4px; 
+    -webkit-border-radius: 4px; 
+    box-shadow: 0px 0px 8px #d9d9d9; 
+    -moz-box-shadow: 0px 0px 8px #d9d9d9; 
+    -webkit-box-shadow: 0px 0px 8px #d9d9d9; 
+} 
+ 
+.textbox:focus { 
+    outline: none; 
+    border: 1px solid #7bc1f7; 
+    box-shadow: 0px 0px 8px #7bc1f7; 
+    -moz-box-shadow: 0px 0px 8px #7bc1f7; 
+    -webkit-box-shadow: 0px 0px 8px #7bc1f7; 
+} 
+
+/* FORMULAIRE DE CONNEXION */
+
+.form-signin
+{
+    max-width: 330px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.form-signin input[type="text"]
+{
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.form-signin input[type="password"]
+{
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.account-wall
+{
+    margin-top: 20px;
+    padding: 10px 0px 50px 0px;
+    background-color: #dee4eb;  
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.login-title
+{
+    color: #555;
+    font-size: 20px;
+    font-weight: 400;
+    display: block;
+}
+
+.profile-img
+{
+    width: 120px;
+    height: 65px;
+    margin: 0 auto 10px;
+    display: block;
+    
+}
+
+/* PAGE ADMINISTRATEUR: LISTE DES CLIENTS */
+.titresupp{
+    color: #ab5656;
+    font-weight: bold;
+}
+
+.titremodif{
+    color: #c78443;
+    font-weight: bold;
+}
+
+.titrepageadmin {
+    font-size: 17px;
+}
+
+.titremodifform {
+    color: #596075;
+    font-family: Calibri light;
+    font-size: 18px;
+    font-weight: bold;
+    text-align:center;
+}
+
+/* FOOTER */
+
+
+/* MESSAGES */
+.success{
+background: #98E17E;
+color:#3B6B2A;
+border:1px solid #3B6B2A;
+border-radius: 5px;
+text-align: center;
+padding:5px 10px;
+}
+
+.failure
+{
+background: #F9475E;
+color: #6B2A2A;
+border:1px solid #6B2A2A;
+border-radius: 5px;
+text-align: center;
+padding:5px 10px;
+}
+ 
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
