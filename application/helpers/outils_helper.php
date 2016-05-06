@@ -37,8 +37,19 @@ function modLoad($obj, $data, $vue)
         $obj->load->view("v_sommaire", $data);
     }
     
+    // On peut charger une ou plusieurs vues
+    if(!is_array($vue))
+    {
+        $obj->load->view($vue, $data);
+    }
+    else
+    {
+        foreach($vue as $uneVue)
+        {
+            $obj->load->view($uneVue, $data);
+        }
+    }
     
-    $obj->load->view($vue, $data);
     $obj->load->view('v_pied');
 }
 

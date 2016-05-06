@@ -129,7 +129,7 @@ class Visiteur extends CI_Controller
         $data["dateModif"] =  dateAnglaisVersFrancais($dateModif);
               
         // Chargement des vues
-        modLoad($this, $data, 'v_etatFrais');
+        modLoad($this, $data, array('v_listeMois', 'v_etatFrais'));
     }
     
     
