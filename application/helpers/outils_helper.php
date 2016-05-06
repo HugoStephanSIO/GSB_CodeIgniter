@@ -106,7 +106,7 @@ function moisChiffresVersLettres($mois)
 
 /**
  * Transforme une date au format français jj/mm/aaaa vers le format anglais aaaa-mm-jj
- 
+ *
  * @param string : $madate au format  jj/mm/aaaa
  * @return string : la date au format anglais aaaa-mm-jj
 */
@@ -121,7 +121,7 @@ function dateFrancaisVersAnglais($maDate)
 
 /**
  * Transforme une date au format format anglais aaaa-mm-jj vers le format français jj/mm/aaaa 
- 
+ *
  * @param string : $madate au format  aaaa-mm-jj
  * @return string : la date au format format français jj/mm/aaaa
 */
@@ -151,7 +151,7 @@ function estEntierPositif($valeur)
 
 /**
  * Indique si un tableau de valeurs est constitué d'entiers positifs ou nuls
- 
+ *
  * @param array[string] : $tabEntiers : le tableau
  * @return boolean : vrai ou faux
 */
@@ -172,7 +172,7 @@ function estTableauEntiers($tabEntiers)
 
 /**
  * Vérifie si une date est inférieure d'un an à la date actuelle
- 
+ *
  * @param string : $dateTestee 
  * @return boolean : vrai ou faux
 */
@@ -192,7 +192,7 @@ function estDateDepassee($dateTestee)
 
 /**
  * Vérifie la validité du format d'une date française jj/mm/aaaa d'une chaine de caractère
- 
+ *
  * @param string : $date 
  * @return boolean : vrai ou faux
 */
@@ -227,7 +227,7 @@ function estDateValide($date)
 
 /**
  * Vérifie que le tableau de frais ne contient que des valeurs numériques 
- 
+ *
  * @param array[?] : $lesFrais 
  * @return boolean : vrai ou faux
 */
