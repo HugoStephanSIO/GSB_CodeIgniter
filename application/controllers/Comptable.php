@@ -143,6 +143,9 @@ class Comptable extends CI_Controller
         $dateModif =  $data["lesInfosFicheFrais"]['dateModif'];
         $data["dateModif"] =  dateAnglaisVersFrancais($dateModif);
                 
+        // Récupère les informations (nom et prénom) pour afficher sa fiche
+        $data['visiteur'] = $this->Model->getInformationsVisiteur($idVisiteur);
+        
         // Chargement des vues
         modLoad($this, $data, 'v_etatFrais');
     }

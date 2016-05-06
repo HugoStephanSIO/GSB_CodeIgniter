@@ -1,6 +1,12 @@
 <div class = "container">
-    <div class="col-md-8 col-md-push-2">   
-        <h2 class="h2titre">Fiche de frais du mois <?php echo $numMois."-".$numAnnee?> : </h2>
+    <div class="col-md-8 col-md-push-1">   
+        <h2 class="h2titre">Fiche de frais du mois <?php echo $numMois."-".$numAnnee?>  
+            <?php 
+                if(isset($visiteur)) 
+                {
+                    echo "de ".$visiteur->nom. " ".$visiteur->prenom." ";
+                }
+            ?> : </h2>
             <p class="infos">
                 <b>Etat</b> : <?php echo $libEtat?> depuis le <?php echo $dateModif?> <br/> 
                 <b>Montant validé</b> : <?php echo $montantValide?>                 
